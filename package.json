@@ -1,0 +1,22 @@
+{
+  "name": "real-estate-practice-tool",
+  "version": "1.0.0",
+  "description": "AI-powered practice tool for real estate agents",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "real-estate",
+    "practice",
+    "ai",
+    "training"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.18.2",
+    "node-fetch": "^2.7.0"
+  }
+}

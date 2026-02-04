@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ElevenLabs API Test</title>
+</head>
+<body>
+  <h2>ElevenLabs API Key Test</h2>
+
+  <button onclick="speak()">Test Voice</button>
+  <p id="status"></p>
+  <audio id="player" controls></audio>
+
+  <script>
+    async function speak() {
+  document.getElementById("status").innerText = "Generating audio...";
+
+  try {
+    const response = await fetch("/api/speak", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: "Hello! If you can hear this, your ElevenLabs API key is working.",
+        model_id: "eleven_monolingual_v1"
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("HTTP " + response.status);
+    }
+
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    const player = document.getElementById("player");
+    player.src = audioUrl;
+    player.play();
+
+    document.getElementById("status").innerText = "Success!";
+  } catch (err) {
+    console.error(err);
+    document.getElementById("status").innerText = "Error: " + err.message;
+  }
+}
+  </script>
+</body>
+</html>
