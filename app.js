@@ -129,46 +129,41 @@ class RealEstatePracticeApp {
                 this.updateStartButton();
             }
         });
-
-        updateStartButton() {
-            const btn = document.getElementById('startPracticeBtn');
-            btn.disabled = !this.selectedScenario; // Only check for scenario
-        }
-
+    
         // Scenario recording
         document.getElementById('recordScenarioBtn').addEventListener('click', () => {
             this.startRecording('scenario');
         });
-
+    
         document.getElementById('stopScenarioBtn').addEventListener('click', () => {
             this.stopRecording();
         });
-
+    
         // Response recording
         document.getElementById('recordResponseBtn').addEventListener('click', () => {
             this.startRecording('response');
         });
-
+    
         document.getElementById('stopResponseBtn').addEventListener('click', () => {
             this.stopRecording();
             this.handleUserResponse();
         });
-
+    
         // Start practice
         document.getElementById('startPracticeBtn').addEventListener('click', () => {
             this.startPracticeSession();
         });
-
+    
         // End session
         document.getElementById('endSessionBtn').addEventListener('click', () => {
             this.endSession();
         });
-
+    
         // New session
         document.getElementById('newSessionBtn').addEventListener('click', () => {
             this.resetApp();
         });
-
+    
         // Rating stars
         document.querySelectorAll('.stars').forEach(container => {
             container.addEventListener('click', (e) => {
@@ -178,24 +173,24 @@ class RealEstatePracticeApp {
                     this.setRating(category, value);
                 }
             });
-
+    
             container.addEventListener('mouseover', (e) => {
                 if (e.target.classList.contains('star')) {
                     const value = parseInt(e.target.dataset.value);
                     this.highlightStars(container, value);
                 }
             });
-
+    
             container.addEventListener('mouseout', () => {
                 const category = container.dataset.category;
                 this.highlightStars(container, this.ratings[category]);
             });
         });
     }
-
+    
     updateStartButton() {
         const btn = document.getElementById('startPracticeBtn');
-        btn.disabled = !(this.selectedScenario && this.elevenLabsKey && this.anthropicKey);
+        btn.disabled = !this.selectedScenario; // Only check for scenario, not API keys
     }
 
     startRecording(type) {
@@ -270,9 +265,7 @@ class RealEstatePracticeApp {
 
         try {
             // Validate API key
-            if (!this.anthropicKey || this.anthropicKey.length < 20) {
-                throw new Error('Invalid Anthropic API key. Please check your key.');
-            }
+           
 
             // Build conversation context
             let systemPrompt = `You are role-playing as a prospect in a real estate scenario: ${this.selectedScenario.name}.
@@ -357,11 +350,7 @@ Important guidelines:
     async speakText(text) {
         try {
             // Get available voices using proxy
-            const voicesResponse = await fetch('/api/elevenlabs/voices', {
-                headers: {
-                    'x-api-key': this.elevenLabsKey
-                }
-            });
+            const voicesResponse = await fetch('/api/elevenlabs/voices');
 
             if (!voicesResponse.ok) {
                 throw new Error('Failed to fetch voices');
@@ -376,8 +365,7 @@ Important guidelines:
             const response = await fetch(`/api/elevenlabs/tts/${randomVoice.voice_id}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': this.elevenLabsKey
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     text: text,
