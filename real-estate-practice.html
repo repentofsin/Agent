@@ -357,13 +357,14 @@
             <p>Master your real estate conversations with AI-powered role-play</p>
         </div>
 
-        <div class="main-content">    
-
+        <div class="main-content">
+            <!-- Setup Section -->
+            <div class="setup-section active">
                 <h2 style="margin-top: 30px;">Select Practice Scenario</h2>
                 <div class="scenario-grid" id="scenarioGrid">
                     <!-- Scenarios will be populated by JavaScript -->
                 </div>
-
+        
                 <div class="voice-input">
                     <h3>📝 Describe Your Specific Situation (Optional)</h3>
                     <p>Add details about the scenario, client background, or specific challenges you want to practice.</p>
@@ -371,12 +372,12 @@
                     <button class="voice-button" id="stopScenarioBtn" style="display: none;">⏹️ Stop Recording</button>
                     <div class="transcript-area" id="scenarioTranscript">Your custom scenario details will appear here...</div>
                 </div>
-
+        
                 <div style="text-align: center;">
                     <button class="btn" id="startPracticeBtn" disabled>Start Practice Session</button>
                 </div>
             </div>
-
+        
             <!-- Practice Section -->
             <div class="practice-section">
                 <div class="character-info" id="characterInfo">
