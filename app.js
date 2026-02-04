@@ -52,10 +52,8 @@ class RealEstatePracticeApp {
             overall: 0
         };
 
-        // API keys
-        this.elevenLabsKey = '';
-        this.anthropicKey = '';
 
+     
         // Speech recognition
         this.recognition = null;
         this.isRecording = false;
@@ -132,16 +130,10 @@ class RealEstatePracticeApp {
             }
         });
 
-        // API keys
-        document.getElementById('elevenLabsKey').addEventListener('input', (e) => {
-            this.elevenLabsKey = e.target.value.trim();
-            this.updateStartButton();
-        });
-
-        document.getElementById('anthropicKey').addEventListener('input', (e) => {
-            this.anthropicKey = e.target.value.trim();
-            this.updateStartButton();
-        });
+        updateStartButton() {
+            const btn = document.getElementById('startPracticeBtn');
+            btn.disabled = !this.selectedScenario; // Only check for scenario
+        }
 
         // Scenario recording
         document.getElementById('recordScenarioBtn').addEventListener('click', () => {
